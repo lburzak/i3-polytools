@@ -25,5 +25,6 @@ class Block {
     return map;
   }
 
-  String encode() => json.encode(toMap());
+  @override
+  String toString() => json.encode(toMap());
 }

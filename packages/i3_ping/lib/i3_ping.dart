@@ -5,8 +5,7 @@ import 'package:i3_block_sdk/i3_block_sdk.dart';
 const target = 'www.stackoverflow.com';
 
 void main(List<String> args) async {
-  final block = await buildBlock(args);
-  print(block.encode());
+  print(await buildBlock(args));
 }
 
 Future<Block> buildBlock(List<String> args) async {
