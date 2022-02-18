@@ -1,0 +1,16 @@
+name: i3_ping
+description: A starting point for Dart libraries or applications.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=2.14.4 <3.0.0'
+
+
+dependencies:
+  i3_block_sdk:
+    path: '../i3_block_sdk'
+
+dev_dependencies:
+  lints: ^1.0.0
+  test: ^1.16.0
