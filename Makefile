@@ -11,7 +11,7 @@ i3_ping i3_toggl:
 	$(DART_COMPILE) $(PACKAGES_ROOT)/$@/lib/main.dart -o $(BUILD_DIR)/$@
 
 clean:
-	rm -f
+	rm -f $(wildcard $(BUILD_DIR)/*)
 
 install:
 	cp -rf $(wildcard $(BUILD_DIR)/*) $(INSTALL_DIR)
