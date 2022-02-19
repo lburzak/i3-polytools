@@ -1,4 +1,5 @@
 import 'package:i3_block_sdk/i3_block_sdk.dart';
+import 'package:i3_toggl/src/connection_error.dart';
 import 'package:i3_toggl/src/time_entry.dart';
 import 'package:i3_toggl/src/time_entry_repository.dart';
 import 'package:i3_toggl/src/toggl_session_manager.dart';
@@ -17,7 +18,14 @@ class CurrentEntry extends BlockBuilder {
       return Block(text: "Not authenticated");
     }
 
-    final currentEntry = await _entryRepository.getCurrentEntry();
+    TimeEntry? currentEntry;
+
+    try {
+      currentEntry = await _entryRepository.getCurrentEntry();
+    } on ConnectionError {
+      return Block(text: "No connection!", state: BlockState.warning);
+    }
+
     return Block(
         text: _entryToText(currentEntry),
         state: _entryToState(currentEntry)

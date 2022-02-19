@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:i3_toggl/src/config.dart';
+import 'package:i3_toggl/src/connection_error.dart';
 import 'package:i3_toggl/src/session_storage.dart';
 import 'package:i3_toggl/src/time_entry.dart';
 
@@ -16,9 +17,15 @@ class TimeEntryRepository {
     final options = Options(headers: {
       'Cookie': cookie
     });
-    final response = await _dio.get(
-        "https://api.track.toggl.com/api/v8/time_entries/current",
-        options: options);
+    Response response;
+
+    try {
+      response = await _dio.get(
+          "${_config.apiUrl}/time_entries/current",
+          options: options);
+    } on DioError {
+      throw ConnectionError();
+    }
 
     final data = response.data['data'];
     if (data == null) {
