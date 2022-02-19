@@ -1,6 +1,7 @@
 BUILD_DIR=build/bin
 DART_COMPILE=dart compile exe
 PACKAGES_ROOT=packages
+INSTALL_DIR=$(HOME)/bin
 
 $(shell mkdir -p $(BUILD_DIR))
 
@@ -11,3 +12,6 @@ i3_ping i3_toggl:
 
 clean:
 	rm -f
+
+install:
+	cp -rf $(wildcard $(BUILD_DIR)/*) $(INSTALL_DIR)
