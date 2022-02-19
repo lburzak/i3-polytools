@@ -40,8 +40,7 @@ void main(List<String> args) async {
       TimeEntryRepository(dio, sessionStorage, defaultConfig);
   final currentEntry = await entryRepository.getCurrentEntry();
   print(Block(
-      text: formatEntry(currentEntry)
-  ));
+      text: formatEntry(currentEntry), state: makeBlockState(currentEntry)));
   exit(0);
 }
 
@@ -52,6 +51,22 @@ Future<Block> buildBlock(List<String> args) async {
 String formatEntry(TimeEntry? entry) => entry != null
     ? "${entry.safeDescription} ${entry.duration.inBlockFormat}"
     : "No task";
+
+BlockState? makeBlockState(TimeEntry? entry) {
+  if (entry == null) {
+    return BlockState.info;
+  }
+
+  if (entry.duration.inMinutes > 50) {
+    return BlockState.warning;
+  }
+
+  if (entry.duration.inHours > 2) {
+    return BlockState.critical;
+  }
+
+  return null;
+}
 
 extension EntryFormat on Duration {
   String get inBlockFormat => inHours > 0
