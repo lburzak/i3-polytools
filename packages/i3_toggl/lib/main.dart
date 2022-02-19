@@ -38,10 +38,19 @@ void main(List<String> args) async {
   final entryRepository =
       TimeEntryRepository(dio, sessionStorage, defaultConfig);
   final currentEntry = await entryRepository.getCurrentEntry();
-  print(Block(text: currentEntry != null ? currentEntry.safeDescription : "No task"));
+  print(Block(
+      text: currentEntry != null
+          ? "${currentEntry.safeDescription} ${currentEntry.duration.inBlockFormat}"
+          : "No task"));
   exit(0);
 }
 
 Future<Block> buildBlock(List<String> args) async {
   return Block(text: "ping");
+}
+
+extension EntryFormat on Duration {
+  String get inBlockFormat => inHours > 0
+      ? "$inHours:${inMinutes % 60}:${inSeconds % 60}"
+      : "$inMinutes:${inSeconds % 60}";
 }
