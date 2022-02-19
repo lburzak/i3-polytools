@@ -6,9 +6,7 @@ const defaultTarget = 'www.stackoverflow.com';
 
 void main(List<String> args) async {
   await showBlock(Ping(
-      count: args.isNotEmpty ? int.parse(args[0]) : 2,
-      target: defaultTarget
-  ));
+      count: args.isNotEmpty ? int.parse(args[0]) : 2, target: defaultTarget));
 }
 
 class Ping extends BlockBuilder {
@@ -23,17 +21,27 @@ class Ping extends BlockBuilder {
   @override
   Future<Block> build() async {
     final ping = await readAveragePing();
+
+    if (ping == null) {
+      return Block(text: '---', icon: "ping");
+    }
+
     return Block(
         text: ping.round().toString().padLeft(3),
         state: ping > 400 ? BlockState.critical : null,
-        icon: "ping");
+        icon: "ping"
+    );
   }
 
-  Future<num> readAveragePing() async {
-    final output =
-        await Process.run('ping', ['-c', count.toString(), target]);
+  Future<num?> readAveragePing() async {
+    final result = await Process.run('ping', ['-c', count.toString(), target]);
+
+    if (result.exitCode > 0) {
+      return null;
+    }
+
     final rawPing =
-        output.stdout.trim().split('\n').last.split('=')[1].split('/')[1];
+        result.stdout.trim().split('\n').last.split('=')[1].split('/')[1];
 
     return num.parse(rawPing);
   }
