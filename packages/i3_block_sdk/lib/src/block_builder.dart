@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:i3_block_sdk/i3_block_sdk.dart';
 
 abstract class BlockBuilder {
@@ -16,4 +18,5 @@ Future<void> showBlock(BlockBuilder builder) async {
   }
 
   print(block);
+  exit(0);
 }
