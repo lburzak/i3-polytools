@@ -29,14 +29,13 @@ class CurrentEntry extends BlockBuilder {
     return Block(
         icon: "power",
         text: _entryToText(currentEntry),
-        state: _entryToState(currentEntry)
-    );
+        state: _entryToState(currentEntry));
   }
-  
+
   String _entryToText(TimeEntry? entry) => entry != null
       ? "${entry.safeDescription} ${entry.duration.inBlockFormat}"
       : "No task";
-  
+
   BlockState? _entryToState(TimeEntry? entry) {
     if (entry == null) {
       return BlockState.info;
@@ -55,9 +54,13 @@ class CurrentEntry extends BlockBuilder {
 }
 
 extension _EntryFormat on Duration {
-  String get inBlockFormat => inHours > 0
-      ? "$inHours:${inMinutes % 60}:${inSeconds % 60}"
-      : "$inMinutes:${inSeconds % 60}";
+  String get inBlockFormat =>
+      (inHours > 0 ? "${inHours.padded}:" : "") +
+      "${inMinutes.padded}:${inSeconds.padded}";
+}
+
+extension _TimePadding on num {
+  String get padded => (this % 60).toString().padLeft(2, '0');
 }
 
 extension _Format on TimeEntry {
