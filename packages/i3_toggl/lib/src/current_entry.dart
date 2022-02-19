@@ -27,6 +27,7 @@ class CurrentEntry extends BlockBuilder {
     }
 
     return Block(
+        icon: "power",
         text: _entryToText(currentEntry),
         state: _entryToState(currentEntry)
     );
