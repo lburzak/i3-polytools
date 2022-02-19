@@ -4,8 +4,6 @@ class TimeEntry {
 
   const TimeEntry({required this.description, required this.duration});
 
-  String get safeDescription => description ?? "(No description)";
-
   factory TimeEntry.fromMap(Map<String, dynamic> map) {
     int duration = map['duration'] as int;
     return TimeEntry(

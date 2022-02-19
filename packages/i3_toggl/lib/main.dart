@@ -6,6 +6,7 @@ import 'package:i3_block_sdk/i3_block_sdk.dart';
 import 'package:i3_toggl/src/authenticate_command.dart';
 import 'package:i3_toggl/src/config.dart';
 import 'package:i3_toggl/src/session_storage.dart';
+import 'package:i3_toggl/src/time_entry.dart';
 import 'package:i3_toggl/src/time_entry_repository.dart';
 import 'package:i3_toggl/src/toggl_session_manager.dart';
 import 'package:path/path.dart' as p;
@@ -39,9 +40,8 @@ void main(List<String> args) async {
       TimeEntryRepository(dio, sessionStorage, defaultConfig);
   final currentEntry = await entryRepository.getCurrentEntry();
   print(Block(
-      text: currentEntry != null
-          ? "${currentEntry.safeDescription} ${currentEntry.duration.inBlockFormat}"
-          : "No task"));
+      text: formatEntry(currentEntry)
+  ));
   exit(0);
 }
 
@@ -49,8 +49,16 @@ Future<Block> buildBlock(List<String> args) async {
   return Block(text: "ping");
 }
 
+String formatEntry(TimeEntry? entry) => entry != null
+    ? "${entry.safeDescription} ${entry.duration.inBlockFormat}"
+    : "No task";
+
 extension EntryFormat on Duration {
   String get inBlockFormat => inHours > 0
       ? "$inHours:${inMinutes % 60}:${inSeconds % 60}"
       : "$inMinutes:${inSeconds % 60}";
+}
+
+extension Format on TimeEntry {
+  String get safeDescription => description ?? "(No description)";
 }
