@@ -1,16 +1,14 @@
-
 import 'package:dio/dio.dart';
 import 'package:i3_toggl/src/session_storage.dart';
+import 'package:i3_toggl/src/toggl_api_constants.dart';
 
-import 'config.dart';
 import 'http_util.dart';
 
 class TogglSessionManager {
   final Dio _dio;
   final SessionStorage _sessionStorage;
-  final Config _config;
 
-  TogglSessionManager(this._dio, this._sessionStorage, this._config);
+  TogglSessionManager(this._dio, this._sessionStorage);
 
   Future<void> authenticate(String username, String password) async {
     final session = await _createSession(username, password);
@@ -31,7 +29,7 @@ class TogglSessionManager {
     final credentials = encodeCredentials(username, password);
     final headers = {'Authorization': 'Basic $credentials'};
 
-    final response = await _dio.post('${_config.apiUrl}/sessions',
+    final response = await _dio.post('$togglApiUrl/sessions',
         options: Options(headers: headers));
 
     final setCookieHeader = response.headers.value('set-cookie');

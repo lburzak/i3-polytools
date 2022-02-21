@@ -1,11 +1,13 @@
 import 'dart:io';
 
-import 'package:i3_toggl/src/config.dart';
+import 'package:path/path.dart';
+
+final _homePath = Platform.environment['HOME']!;
+final _sessionFilePath =
+    join(_homePath, ".config", "polytools", "toggl_session");
 
 class SessionStorage {
-  final File _sessionFile;
-
-  SessionStorage(Config config) : _sessionFile = File(config.sessionFilePath);
+  final File _sessionFile = File(_sessionFilePath);
 
   Future<void> save(String value) async {
     final exists = await _sessionFile.exists();
