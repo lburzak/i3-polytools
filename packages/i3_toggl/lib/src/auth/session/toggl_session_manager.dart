@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:i3_toggl/src/session_storage.dart';
-import 'package:i3_toggl/src/toggl_api_constants.dart';
+import 'package:i3_toggl/src/auth/session/session_storage.dart';
+import 'package:i3_toggl/src/util/toggl_api_constants.dart';
 
-import 'http_util.dart';
+import '../../util/http_util.dart';
 
 class TogglSessionManager {
   final Dio _dio;

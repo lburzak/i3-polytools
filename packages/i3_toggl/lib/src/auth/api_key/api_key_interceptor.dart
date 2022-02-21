@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../http_util.dart';
+import '../../util/http_util.dart';
 
 class ApiKeyAuthInterceptor extends Interceptor {
   final String _apiKey;

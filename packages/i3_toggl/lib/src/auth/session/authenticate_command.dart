@@ -1,5 +1,5 @@
 import 'package:args/command_runner.dart';
-import 'package:i3_toggl/src/toggl_session_manager.dart';
+import 'package:i3_toggl/src/auth/session/toggl_session_manager.dart';
 
 class AuthenticateCommand extends Command {
   @override

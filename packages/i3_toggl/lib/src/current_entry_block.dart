@@ -1,8 +1,9 @@
 import 'package:i3_block_sdk/i3_block_sdk.dart';
-import 'package:i3_toggl/src/connection_error.dart';
-import 'package:i3_toggl/src/time_entry.dart';
-import 'package:i3_toggl/src/time_entry_repository.dart';
-import 'package:i3_toggl/src/toggl_session_manager.dart';
+import 'package:i3_toggl/src/data/time_entry_repository.dart';
+import 'package:i3_toggl/src/auth/session/toggl_session_manager.dart';
+
+import 'data/model/connection_error.dart';
+import 'data/model/time_entry.dart';
 
 class CurrentEntry extends BlockBuilder {
   final TogglSessionManager _sessionManager;

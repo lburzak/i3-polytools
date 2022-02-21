@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:i3_toggl/src/connection_error.dart';
-import 'package:i3_toggl/src/time_entry.dart';
-import 'package:i3_toggl/src/toggl_api_constants.dart';
+import 'package:i3_toggl/src/util/toggl_api_constants.dart';
+
+import 'model/connection_error.dart';
+import 'model/time_entry.dart';
 
 class TimeEntryRepository {
   final Dio _dio;
