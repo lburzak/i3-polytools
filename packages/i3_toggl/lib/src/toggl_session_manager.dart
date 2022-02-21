@@ -1,9 +1,9 @@
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:i3_toggl/src/session_storage.dart';
 
 import 'config.dart';
+import 'http_util.dart';
 
 class TogglSessionManager {
   final Dio _dio;
@@ -28,7 +28,7 @@ class TogglSessionManager {
   }
 
   Future<String?> _createSession(String username, String password) async {
-    final credentials = _encodeCredentials(username, password);
+    final credentials = encodeCredentials(username, password);
     final headers = {'Authorization': 'Basic $credentials'};
 
     final response = await _dio.post('${_config.apiUrl}/sessions',
@@ -41,11 +41,6 @@ class TogglSessionManager {
     }
 
     return _parseSetCookieHeader(setCookieHeader);
-  }
-
-  String _encodeCredentials(String username, String password) {
-    final credentialsUtf8 = utf8.encode("$username:$password");
-    return base64.encode(credentialsUtf8);
   }
 
   String _parseSetCookieHeader(String value) {
