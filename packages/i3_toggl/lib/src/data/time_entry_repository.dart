@@ -13,7 +13,7 @@ class TimeEntryRepository {
     Response response;
 
     try {
-      response = await _dio.get("$togglApiUrl/time_entries/current",);
+      response = await _dio.get("$togglApiUrl/time_entries/current");
     } on DioError {
       throw ConnectionError();
     }

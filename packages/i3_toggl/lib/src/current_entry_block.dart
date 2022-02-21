@@ -1,24 +1,16 @@
 import 'package:i3_block_sdk/i3_block_sdk.dart';
 import 'package:i3_toggl/src/data/time_entry_repository.dart';
-import 'package:i3_toggl/src/auth/session/toggl_session_manager.dart';
 
 import 'data/model/connection_error.dart';
 import 'data/model/time_entry.dart';
 
 class CurrentEntry extends BlockBuilder {
-  final TogglSessionManager _sessionManager;
   final TimeEntryRepository _entryRepository;
 
-  CurrentEntry(this._sessionManager, this._entryRepository);
+  CurrentEntry(this._entryRepository);
 
   @override
   Future<Block> build() async {
-    final authenticated = await _sessionManager.checkAuthenticated();
-
-    if (!authenticated) {
-      return Block(text: "Not authenticated");
-    }
-
     TimeEntry? currentEntry;
 
     try {
