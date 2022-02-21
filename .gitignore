@@ -11,4 +11,5 @@ pubspec.lock
 
 .idea
 
-.client_id.local.json
+i3_toggl.env
+i3_meetings.env

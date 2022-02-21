@@ -7,12 +7,19 @@ define compile_dart
 	$(DART_COMPILE) $(PACKAGES_ROOT)/$(1)/lib/main.dart -o $(BUILD_DIR)/$(1)
 endef
 
+define read_env
+$(shell cat $(1) | tr '\n' ',')
+endef
+
 $(shell mkdir -p $(BUILD_DIR))
 
 all: i3_ping i3_toggl
 
-i3_ping i3_toggl:
+i3_ping:
 	$(call compile_dart,$@)
+
+i3_toggl: i3_toggl.env
+	$(call compile_dart,$@) --define=$(call read_env,$^)
 
 i3_meetings: .client_id.local.json
 	$(call compile_dart,$@) --define=CLIENT_ID=$(shell cat $^ | jq '.identifier'),CLIENT_SECRET=$(shell cat $^ | jq '.secret')
