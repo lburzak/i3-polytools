@@ -21,8 +21,8 @@ i3_ping:
 i3_toggl: i3_toggl.env
 	$(call compile_dart,$@) --define=$(call read_env,$^)
 
-i3_meetings: .client_id.local.json
-	$(call compile_dart,$@) --define=CLIENT_ID=$(shell cat $^ | jq '.identifier'),CLIENT_SECRET=$(shell cat $^ | jq '.secret')
+i3_meetings: i3_meetings.env
+	$(call compile_dart,$@) --define=$(call read_env,$^)
 
 clean:
 	rm -f $(wildcard $(BUILD_DIR)/*)
