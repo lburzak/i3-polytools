@@ -4,6 +4,7 @@ import 'package:googleapis/calendar/v3.dart';
 import 'package:i3_block_sdk/i3_block_sdk.dart';
 import 'package:i3_meetings/src/auth_manager.dart';
 import 'package:i3_meetings/src/file_credentials_storage.dart';
+import 'package:i3_meetings/src/google_events_service.dart';
 import 'package:path/path.dart';
 
 final homePath = Platform.environment["HOME"]!;
@@ -25,7 +26,11 @@ class Meetings extends BlockBuilder {
   @override
   Future<Block> build() async {
     final client = await _authManager.createClient();
-    final calendars = await CalendarApi(client).calendarList.list();
-    return Block(text: calendars.items!.map((e) => e.summary).join(" "));
+    final api = CalendarApi(client);
+    const calendars = ['Personal'];
+    final service = GoogleEventsService(api, calendarsNames: calendars);
+    final nearest = await service.getNextEvent();
+
+    return Block(text: nearest.summary ?? "No summary");
   }
 }
